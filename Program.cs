@@ -94,6 +94,7 @@ namespace StiriVVrsto
                 }
 
             }
+
             for (int j = 0; j < 7; j++)
             {
                 int stevka = 1;
@@ -109,45 +110,35 @@ namespace StiriVVrsto
                     if (stevka == 4) { return true; }
                 }
             }
-            for (int j = 3; j < 6; j++)
-            {
-                int stevka = 1;
-                char znak = polje[j, 0];
-                for (int i = 0; i < 6; i++)
-                {
-                    if (i == 0) { i++; }
-                    if (j >= i)
-                    {
-                        if (znak == polje[j - i, i] && znak != ' ') { stevka++; }
-                        else
-                        {
-                            znak = polje[j - i, i];
-                            stevka = 1;
-                        }
-                        if (stevka == 4) { return true; }
-                    }
-                }
-            }
-            for (int j = 0; j < 6; j++)
-            {
-                int stevka = 1;
-                char znak = polje[0, j];
-                for (int i = 0; i < 6; i++)
-                {
-                    if (i == 0) { i++; }
-                    if (i + j <= 6)
-                    {
-                        if (znak == polje[i, i + j] && znak != ' ') { stevka++; }
-                        else
-                        {
-                            znak = polje[i, i + j];
-                            stevka = 1;
-                        }
-                        if (stevka == 4) { return true; }
-                    }
-                }
 
+            for (int j = 0; j < 3; j++)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (polje[j, i] == ' ') { continue; }
+                    int stevka = 1;
+                    for (int k = 1; k < 4; k++)
+                    {
+                        if (polje[j, i] == polje[j + k, i + k]) { stevka++; }
+                    }
+                    if (stevka == 4) { return true; }
+                }
             }
+
+            for (int j = 0; j < 3; j++)
+            {
+                for (int i = 3; i < 7; i++)
+                {
+                    if (polje[j, i] == ' ') { continue; }
+                    int stevka = 1;
+                    for (int k = 1; k < 4; k++)
+                    {
+                        if (polje[j, i] == polje[j + k, i - k]) { stevka++; }
+                    }
+                    if (stevka == 4) { return true; }
+                }
+            }
+
             return false;
         }
     }
