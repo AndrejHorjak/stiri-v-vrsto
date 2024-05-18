@@ -7,7 +7,34 @@ namespace StiriVVrsto
     {
         static void Main(string[] args)
         {
-            /*polje je 6x7*/
+            char[] znaki = { 'X', 'O' };
+            while (true)
+            {
+                Console.WriteLine("=============");
+                Console.WriteLine("Štiri v vrsto");
+                Console.WriteLine("=============");
+                Console.WriteLine("1: Začetek igre");
+                Console.WriteLine("2: Spremeni igralna simbola");
+
+
+                string vnos = Console.ReadLine();
+                switch (vnos)
+                {
+                    case "1":
+                        Igra(znaki);
+                        break;
+                    case "2":
+                        ZamenjajSimbol(znaki);
+                        break;
+                    default:
+                        Console.WriteLine("Napaka pri vnosu");
+                        break;
+                }
+            }
+        }
+
+        private static void Igra(char[] znaki)
+        {
             bool igralec = false;
             char[,] igralno_polje = new char[6, 7];
             for (int i = 0; i < 6; i++)
@@ -18,34 +45,13 @@ namespace StiriVVrsto
                 }
             }
             int[] prosta_mesta = new int[7] { 5, 5, 5, 5, 5, 5, 5 };
-            char[] znaki = { 'X', 'O' };
+            
             for (int k = 0; k < 42; k++)
             {
                 IzpisiPolje(igralno_polje);
                 Console.Write((igralec ? 2 : 1) + ". igralec na potezi\nvstavite stevilo stolpca:");
                 int stolpec;
-                while (true)
-                {
-                    try
-                    {
-                        stolpec = int.Parse(Console.ReadLine()) - 1;
-                        if (stolpec < 0 || stolpec >= 7)
-                        {
-                            throw (new FormatException("Index out of range."));
-                        }
-                    }
-                    catch (FormatException e)
-                    {
-                        Console.WriteLine("Napaka pri vnosu.\nVpisite stevilo med 1 in 7!");
-                        continue;
-                    }
-
-                    if (prosta_mesta[stolpec] >= 0 && prosta_mesta[stolpec] < 7) { break; }
-                    else
-                    {
-                        Console.WriteLine("stolpec je poln vpisi se enkrat");
-                    }
-                }
+                stolpec = UporabniskiVnos(prosta_mesta);
                 igralno_polje[prosta_mesta[stolpec], stolpec] = znaki[igralec ? 1 : 0];
                 prosta_mesta[stolpec] -= 1;
                 if (Zmaga(igralno_polje))
@@ -53,7 +59,7 @@ namespace StiriVVrsto
                     IzpisiPolje(igralno_polje);
                     Console.WriteLine((igralec ? 2 : 1) + ". igralec je zmagal");
                     Console.ReadKey();
-                    Environment.Exit(1);
+                    return;
                 }
                 igralec = !igralec;
             }
@@ -61,6 +67,35 @@ namespace StiriVVrsto
             IzpisiPolje(igralno_polje);
             Console.WriteLine("igra je izenacena");
             Console.ReadKey();
+        }
+
+        private static int UporabniskiVnos(int[] prosta_mesta)
+        {
+            int stolpec;
+            while (true)
+            {
+                try
+                {
+                    stolpec = int.Parse(Console.ReadLine()) - 1;
+                    if (stolpec < 0 || stolpec >= 7)
+                    {
+                        throw (new FormatException("Index out of range."));
+                    }
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine("Napaka pri vnosu.\nVpisite stevilo med 1 in 7!");
+                    continue;
+                }
+
+                if (prosta_mesta[stolpec] >= 0 && prosta_mesta[stolpec] < 7) { break; }
+                else
+                {
+                    Console.WriteLine("stolpec je poln vpisi se enkrat");
+                }
+            }
+
+            return stolpec;
         }
 
         private static void IzpisiPolje(char[,] igralno_polje)
@@ -108,6 +143,25 @@ namespace StiriVVrsto
                 }
             }
             return false;
+        }
+        static void ZamenjajSimbol(char[] simbola)
+        {
+            Console.WriteLine("Vnesi novi znak za 1. igralca");
+            string vnos = "";
+            while (true)
+            {
+                vnos = Console.ReadLine();
+                if (vnos.Length == 1) break;
+            }
+            simbola[0] = vnos[0];
+            Console.WriteLine("Vnesi novi znak za 2. igralca");
+            vnos = "";
+            while (true)
+            {
+                vnos = Console.ReadLine();
+                if (vnos.Length == 1) break;
+            }
+            simbola[1] = vnos[0];
         }
     }
 }
