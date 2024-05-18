@@ -15,6 +15,7 @@ namespace StiriVVrsto
                 Console.WriteLine("=============");
                 Console.WriteLine("1: Začetek igre");
                 Console.WriteLine("2: Spremeni igralna simbola");
+                Console.WriteLine("3: Zapri igro");
 
 
                 string vnos = Console.ReadLine();
@@ -26,6 +27,8 @@ namespace StiriVVrsto
                     case "2":
                         ZamenjajSimbol(znaki);
                         break;
+                    case "3":
+                        return;
                     default:
                         Console.WriteLine("Napaka pri vnosu");
                         break;
