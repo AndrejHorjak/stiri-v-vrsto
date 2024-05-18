@@ -75,67 +75,32 @@ namespace StiriVVrsto
             Console.WriteLine(" 1 2 3 4 5 6 7 ");
         }
 
+        static bool VPolju(int x, int y)
+        {
+            if (x >= 6 || x < 0) return false;
+            if (y >= 7 || y < 0) return false;
+            return true;
+        }
+
         static bool Zmaga(char[,] polje)
         {
-            for (int j = 0; j < 6; j++)
+            int[,] smeri = { { 0, 1 }, { 1, 0 }, { 1, 1 }, { 1, -1 } };
+
+            for(int smer = 0; smer < 4; smer++)
             {
-                int stevka = 1;
-                char znak = polje[j, 0];
-                for (int i = 1; i < 7; i++)
+                for(int i = 0; i < 6; i++)
                 {
-                    if (znak == polje[j, i] && znak != ' ') { stevka++; }
-                    else
+                    for(int j = 0; j < 7; j++)
                     {
-                        znak = polje[j, i];
-                        stevka = 1;
+                        if (polje[i, j] == ' ') { continue; }
+                        int stevka = 1;
+                        for (int k = 1; k < 4; k++)
+                        {
+                            if (!VPolju(i + smeri[smer, 0] * k, j + smeri[smer, 1] * k)) { break; }
+                            if (polje[i, j] == polje[i + smeri[smer, 0] * k, j + smeri[smer, 1] * k]) { stevka++; }
+                        }
+                        if (stevka == 4) { return true; }
                     }
-                    if (stevka == 4) { return true; }
-
-                }
-
-            }
-
-            for (int j = 0; j < 7; j++)
-            {
-                int stevka = 1;
-                char znak = polje[0, j];
-                for (int i = 1; i < 6; i++)
-                {
-                    if (znak == polje[i, j] && znak != ' ') { stevka++; }
-                    else
-                    {
-                        znak = polje[i, j];
-                        stevka = 1;
-                    }
-                    if (stevka == 4) { return true; }
-                }
-            }
-
-            for (int j = 0; j < 3; j++)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    if (polje[j, i] == ' ') { continue; }
-                    int stevka = 1;
-                    for (int k = 1; k < 4; k++)
-                    {
-                        if (polje[j, i] == polje[j + k, i + k]) { stevka++; }
-                    }
-                    if (stevka == 4) { return true; }
-                }
-            }
-
-            for (int j = 0; j < 3; j++)
-            {
-                for (int i = 3; i < 7; i++)
-                {
-                    if (polje[j, i] == ' ') { continue; }
-                    int stevka = 1;
-                    for (int k = 1; k < 4; k++)
-                    {
-                        if (polje[j, i] == polje[j + k, i - k]) { stevka++; }
-                    }
-                    if (stevka == 4) { return true; }
                 }
             }
 
