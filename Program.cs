@@ -52,9 +52,9 @@ namespace StiriVVrsto
             for (int k = 0; k < 42; k++)
             {
                 IzpisiPolje(igralno_polje);
-                Console.Write((igralec ? 2 : 1) + ". igralec na potezi\nvstavite stevilo stolpca:");
-                int stolpec;
-                stolpec = UporabniskiVnos(prosta_mesta);
+                Console.Write((igralec ? 2 : 1) + ". igralec na potezi\nvstavite stevilo stolpca: ");
+                int stolpec = 0;
+                UporabniskiVnos(ref stolpec, prosta_mesta);
                 igralno_polje[prosta_mesta[stolpec], stolpec] = znaki[igralec ? 1 : 0];
                 prosta_mesta[stolpec] -= 1;
                 if (Zmaga(igralno_polje))
@@ -72,9 +72,8 @@ namespace StiriVVrsto
             Console.ReadKey();
         }
 
-        private static int UporabniskiVnos(int[] prosta_mesta)
+        private static void UporabniskiVnos(ref int stolpec, int[] prosta_mesta)
         {
-            int stolpec;
             while (true)
             {
                 try
@@ -97,8 +96,6 @@ namespace StiriVVrsto
                     Console.WriteLine("stolpec je poln vpisi se enkrat");
                 }
             }
-
-            return stolpec;
         }
 
         private static void IzpisiPolje(char[,] igralno_polje)
@@ -155,6 +152,7 @@ namespace StiriVVrsto
             {
                 vnos = Console.ReadLine();
                 if (vnos.Length == 1) break;
+                Console.WriteLine("Napačen vnos.\nVpiši natanko en znak!");
             }
             simbola[0] = vnos[0];
             Console.WriteLine("Vnesi novi znak za 2. igralca");
@@ -162,7 +160,17 @@ namespace StiriVVrsto
             while (true)
             {
                 vnos = Console.ReadLine();
-                if (vnos.Length == 1) break;
+                if (vnos.Length != 1) 
+                {
+                    Console.WriteLine("Napačen vnos.\nVpiši natanko en znak!");
+                    continue;
+                }
+                if (simbola[0] == vnos[0]) 
+                {
+                    Console.WriteLine("Vpiši drugačen simbol!");
+                    continue;
+                }
+                break;
             }
             simbola[1] = vnos[0];
         }
