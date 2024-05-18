@@ -41,7 +41,10 @@ namespace StiriVVrsto
                     }
 
                     if (prosta_mesta[stolpec] >= 0 && prosta_mesta[stolpec] < 7) { break; }
-                    Console.WriteLine("stolpec je poln vpisi se enkrat");
+                    else
+                    {
+                        Console.WriteLine("stolpec je poln vpisi se enkrat");
+                    }
                 }
                 igralno_polje[prosta_mesta[stolpec], stolpec] = znaki[igralec ? 1 : 0];
                 prosta_mesta[stolpec] -= 1;
@@ -93,17 +96,17 @@ namespace StiriVVrsto
                     for(int j = 0; j < 7; j++)
                     {
                         if (polje[i, j] == ' ') { continue; }
-                        int stevka = 1;
-                        for (int k = 1; k < 4; k++)
+                        int stevka = 0, k = 0;
+                        do
                         {
+                            stevka++;
+                            k++;
                             if (!VPolju(i + smeri[smer, 0] * k, j + smeri[smer, 1] * k)) { break; }
-                            if (polje[i, j] == polje[i + smeri[smer, 0] * k, j + smeri[smer, 1] * k]) { stevka++; }
-                        }
+                        } while (polje[i, j] == polje[i + smeri[smer, 0] * k, j + smeri[smer, 1] * k] && k<4);
                         if (stevka == 4) { return true; }
                     }
                 }
             }
-
             return false;
         }
     }
