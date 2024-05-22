@@ -60,7 +60,7 @@ namespace StiriVVrsto
                 if (Zmaga(igralno_polje))
                 {
                     IzpisiPolje(igralno_polje);
-                    Console.WriteLine((igralec ? 2 : 1) + ". igralec je zmagal");
+                    Console.WriteLine((igralec ? 2 : 1) + ". igralec je zmagal!");
                     Console.ReadKey();
                     return;
                 }
@@ -68,7 +68,7 @@ namespace StiriVVrsto
             }
 
             IzpisiPolje(igralno_polje);
-            Console.WriteLine("igra je izenacena");
+            Console.WriteLine("Igra je izenačena!");
             Console.ReadKey();
         }
 
@@ -84,16 +84,16 @@ namespace StiriVVrsto
                         throw (new FormatException("Index out of range."));
                     }
                 }
-                catch (FormatException e)
+                catch (Exception e)
                 {
-                    Console.WriteLine("Napaka pri vnosu.\nVpisite stevilo med 1 in 7!");
+                    Console.WriteLine("Napaka pri vnosu.\nVpišite stevilo med 1 in 7!");
                     continue;
                 }
 
-                if (prosta_mesta[stolpec] >= 0 && prosta_mesta[stolpec] < 7) { break; }
+                if (prosta_mesta[stolpec] >= 0) { break; }
                 else
                 {
-                    Console.WriteLine("stolpec je poln vpisi se enkrat");
+                    Console.WriteLine("Stolpec je poln, vpišite novo število!");
                 }
             }
         }
